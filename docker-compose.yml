@@ -1,0 +1,27 @@
+version: '3.6'
+services:
+  gitlab:
+    image: 'gitlab/gitlab-ce:latest'
+    container_name: gitlab
+    restart: always
+    ports:
+      - '8080:80'
+      - '8443:443'
+      - '822:22'
+    volumes:
+      - 'gitlab_config:/etc/gitlab'
+      - 'gitlab_logs:/var/log/gitlab'
+      - 'gitlab_data:/var/opt/gitlab'
+    shm_size: '2gb'
+  gitlab-runner:
+    image: gitlab/gitlab-runner:latest
+    container_name: gitlab-runner
+    restart: always
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - 'gitlab-runner-config:/etc/gitlab-runner'
+volumes:
+  gitlab_config: {}
+  gitlab_logs: {}
+  gitlab_data: {}
+  gitlab-runner-config: {}
