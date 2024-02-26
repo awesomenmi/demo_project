@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Service
+metadata:
+  name: demo-app-service
+spec:
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: demo-app
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+      nodePort: 30100
