@@ -4,9 +4,12 @@
   * [Настройка GitLab](настройка-gitlab)
     * [GitLab troubleshooting](gitlab-troubleshooting)
     * [Подключение runner к инстансу GitLab](подключение-runner-к-инстансу-gitlab)
-  * [Установка k8s](установка-k8s)
-  
+  * [Установка kubectl и minikube](установка-kubectl-и-minikube)
+ * [Содержимое проекта](содержимое-проекта)
+   * [Описание этапов pipeline-a](описание-этапов-pipeline-a)
 # Настройка окружения
+Все последующие действия производились на виртуальной машине, развернутой в Яндекс.Облако со следующими характеристиками:
+![image](screenshots/vm_stats.png)
 ## Установка Docker
 Установим Docker
 ```
@@ -128,25 +131,28 @@ shutdown_timeout = 0
     network_mtu = 0
 ```
 
-## Установка k8s
-https://kubernetes.io/docs/setup/
-скачать 
+## Установка kubectl и minikube
+
+Скачиваем и устанавливаем kubectl 
+```
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-установить
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 kubectl version --client
 [lumi@fhmtps91ba79aa5re88e ~]$ kubectl version --client
 Client Version: v1.29.2
 Kustomize Version: v5.0.4-0.20230601165947-6ce0bf390ce3
+```
+Скачиваем и устанавливаем kubectl 
+```
 minicube install
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
 [lumi@fhmtps91ba79aa5re88e ~]$ minikube version
 minikube version: v1.32.0
 commit: 8220a6eb95f0a4d75f7f2d7b14cef975f050512d
-настройка драйвера - https://minikube.sigs.k8s.io/docs/drivers/
-
-
+```
+Запускаем minikube
+```
 [lumi@fhmtps91ba79aa5re88e ~]$ minikube start --driver=docker
 * minikube v1.32.0 on Centos 7.9.2009 (amd64)
 * Using the docker driver based on user configuration
@@ -180,22 +186,54 @@ X Docker is nearly out of disk space, which may cause deployments to fail! (86% 
 * Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
 
 * Documentation: https://docs.docker.com/engine/install/linux-postinstall/
+```
 
+# Содержимое проекта
+Исходный код приложения [python-demoapp](https://github.com/benc-uk/python-demoapp) добавим в локальный GitLab-проект
 
+Сущности k8s, для последующего разворачивания образа приложения в minicube-кластер 
+[deployment.yaml](https://github.com/awesomenmi/demo_project/blob/main/k8s/deployment.yaml)
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app-deployment
+  labels:
+    app: demo-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-app
+  template:
+    metadata:
+      labels:
+        app: demo-app
+    spec:
+      containers:
+      - name: demo-app
+        image: luminescencia/demo-app:python-app-1.0
+        ports:
+        - containerPort: 5000
+```
+[service.yaml](https://github.com/awesomenmi/demo_project/blob/main/k8s/service.yaml)
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-app-service
+spec:
+  type: NodePort
+  selector:
+    app: demo-app
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+      nodePort: 30100
+```
+Для последующего доступа к приложению извне ноды был выбран тип сервиса ```type: NodePort```
 
+## Описание этапов pipeline-a
 
-Создать проект
-закоммитить в проект
-
-Create the Docker volume:
-
-docker volume create gitlab-runner-config
-
-Start the GitLab Runner container using the volume we just created:
-
-docker run -d --name gitlab-runner --restart always \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -v gitlab-runner-config:/etc/gitlab-runner \
-    gitlab/gitlab-runner:latest
-
-docker compose up -d
+Код pipelin-a [.gitlab-ci.yml](https://github.com/awesomenmi/demo_project/blob/main/.gitlab-ci.yml)
