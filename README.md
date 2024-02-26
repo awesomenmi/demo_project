@@ -5,6 +5,7 @@
     * [GitLab troubleshooting](gitlab-troubleshooting)
     * [Подключение runner к инстансу GitLab](подключение-runner-к-инстансу-gitlab)
   * [Установка k8s](установка-k8s)
+  
 # Настройка окружения
 ## Установка Docker
 Установим Docker
