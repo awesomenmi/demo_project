@@ -1,7 +1,12 @@
-# demo_project
-[Установка окружения](#установка-окружения)
-[Настройка GitLab](#настройка-gitlab)
-## Установка окружения
+
+* [Настройка окружения](настройка-окружения)
+  * [Установка Docker](установка-docker)
+  * [Настройка GitLab](настройка-gitlab)
+    * [GitLab troubleshooting](gitlab-troubleshooting)
+    * [Подключение runner к инстансу GitLab](подключение-runner-к-инстансу-gitlab)
+  * [Установка k8s](установка-k8s)
+# Настройка окружения
+## Установка Docker
 Установим Docker
 ```
 sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
@@ -27,7 +32,7 @@ docker-compose up -d
 ```
 docker exec -it gitlab gitlab-rake "gitlab:password:reset[root]"
 ```
-### Подключим runner к инстансу GitLab 
+### Подключение runner к инстансу GitLab 
 Для этого необходимо найти регистрационный токен: _Project -> CI/CD Settings -> Runners_
 ![image](screenshots/token_runner.png)
 
@@ -61,9 +66,7 @@ Configuration (with the authentication token) was saved in "/etc/gitlab-runner/c
 > Для того, чтобы runner мог использовать job-ы без тегов, необходимо перейти в настройки необходимого runner-a и поставить галочку _Indicates whether this runner can pick jobs without tags_
 
 ## GitLab troubleshooting
-
-###  does not appear to be a git repository
-_Ошибка_
+_Ошибка:_ **does not appear to be a git repository**
 ```
 Getting source from Git repository
 00:00
@@ -75,23 +78,24 @@ Please make sure you have the correct access rights
 and the repository exists.
 ERROR: Job failed: exit code 1
 ```
-_Решение_
+_Решение:_
 Перейти в Admin Area -> Settings -> General -> Custom Git clone URL for HTTP(S)
 И убедиться, что формат URL соответстсвует http://x.x.x.x:8080
 
-### dial tcp: lookup docker on 10.128.0.2:53: no such host
-_Ошибка_
+_Ошибка:_ **dial tcp: lookup docker on 10.128.0.2:53: no such host**
+```
 $ docker login -u $REGISTRY_USER -p $REGISTRY_PASS
 WARNING! Using --password via the CLI is insecure. Use --password-stdin.
 error during connect: Post "http://docker:2375/v1.24/auth": dial tcp: lookup docker on 10.128.0.2:53: no such host
-_Решение_
+```
+_Решение:_
 Перейти в контейнер runner-a
 ```
 [lumi@fhmtps91ba79aa5re88e ~]$ docker exec -it gitlab-runner bash
 root@4827c84c5b48:/# vi /etc/gitlab-runner/config.toml
 ```
-Отредактировать конфиг ```/etc/gitlab-runner/config.toml ```, добавив строчку ``` "/var/run/docker.sock:/var/run/docker.sock"``` в _volumes_
-Итоговое содержимое файла  ```/etc/gitlab-runner/config.toml ```
+Отредактировать конфиг ```/etc/gitlab-runner/config.toml```, добавив строчку ```"/var/run/docker.sock:/var/run/docker.sock"``` в _volumes_
+Итоговое содержимое файла  ```/etc/gitlab-runner/config.toml```:
 ```
 concurrent = 1
 check_interval = 0
