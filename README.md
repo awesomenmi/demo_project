@@ -189,6 +189,8 @@ X Docker is nearly out of disk space, which may cause deployments to fail! (86% 
 ```
 ## Настройка service-account
 https://medium.com/@devayanthakur/minikube-configure-jenkins-kubernetes-plugin-25eb804d0dec
+https://habr.com/ru/articles/783586/
+https://docs.gitlab.com/ee/user/clusters/agent/ci_cd_workflow.html
 
 # Содержимое проекта
 Исходный код приложения [python-demoapp](https://github.com/benc-uk/python-demoapp) добавим в локальный GitLab-проект
