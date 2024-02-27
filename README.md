@@ -241,3 +241,5 @@ spec:
 ## Описание этапов pipeline-a
 
 Код pipelin-a [.gitlab-ci.yml](https://github.com/awesomenmi/demo_project/blob/main/.gitlab-ci.yml)
+
+ kubectl port-forward svc/demo-app-service --address=0.0.0.0 5000:5000
