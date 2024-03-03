@@ -620,6 +620,8 @@ Using docker image sha256:d499a3a1f51df03bbd1f4ac933232c064a5cd8b137094d997f2675
 
 
 [lumi@fhmtps91ba79aa5re88e ~]$ curl 192.168.49.2:30100
+<details>
+```
 <!DOCTYPE html>
 <html>
   <head>
@@ -723,4 +725,6 @@ Using docker image sha256:d499a3a1f51df03bbd1f4ac933232c064a5cd8b137094d997f2675
     <span style="float: right">v1.4.2 [Ben Coleman, 2018-2021] &nbsp;&nbsp;&nbsp;</span>
   </body>
 </html>
- kubectl port-forward svc/demo-app-service --address=0.0.0.0 5000:5000
+```
+</details>
+
