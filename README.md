@@ -1,4 +1,6 @@
 # Навигация 
+* [Описание проекта](описание-проекта)
+  * [Схема](схема)
 * [Настройка окружения](настройка-окружения)
   * [Установка Docker](установка-docker)
   * [Настройка GitLab](настройка-gitlab)
@@ -7,6 +9,13 @@
   * [Установка kubectl и minikube](установка-kubectl-и-minikube)
  * [Содержимое проекта](содержимое-проекта)
    * [Описание этапов pipeline-a](описание-этапов-pipeline-a)
+  
+# Описание проекта
+В данном репозитории расположены инструкция и исходные файлы развертывания инфраструктуры для деплоя python-приложения в minikube-кластер посредством GitLab.
+Инстанс Gitlab и runner для него разворачивается в Docker на ВМ. На этой же ВМ был поднят minikube-кластер.
+## Схема
+![schema.drawio.svg](screenshots/schema.drawio.svg)
+
 # Настройка окружения
 Все последующие действия производились на виртуальной машине, развернутой в Яндекс.Облако со следующими характеристиками:
 ![image](screenshots/vm_stats.png)
@@ -187,10 +196,67 @@ X Docker is nearly out of disk space, which may cause deployments to fail! (86% 
 
 * Documentation: https://docs.docker.com/engine/install/linux-postinstall/
 ```
-## Настройка service-account
-https://medium.com/@devayanthakur/minikube-configure-jenkins-kubernetes-plugin-25eb804d0dec
-https://habr.com/ru/articles/783586/
-https://docs.gitlab.com/ee/user/clusters/agent/ci_cd_workflow.html
+## Подключение GitLab к k8s через агента
+Создадим файл конфигурации агента .gitlab/agents/k8s-connection/config.yaml
+Затем выберем его при регистрации агента в разделе _Operate -> Kubernetes clusters -> Connect a cluster_ и зарегистрируем агент.
+
+Подключим kubernetes agent server. Для этого необходимо выставить значение параметра `gitlab_kas['enable'] = true` в конфигурационном файле
+
+```
+[lumi@fhmtps91ba79aa5re88e ~]$ docker exec -it gitlab bash
+root@5e01bc6a81bb:/# cat /etc/gitlab/gitlab.rb | grep "gitlab_kas\['enable'\]"
+# gitlab_kas['enable'] = true
+root@5e01bc6a81bb:/# vi  /etc/gitlab/gitlab.rb
+root@5e01bc6a81bb:/# cat /etc/gitlab/gitlab.rb | grep "gitlab_kas\['enable'\]"
+gitlab_kas['enable'] = true
+root@5e01bc6a81bb:/# gitlab-ctl reconfigure
+```
+
+Установим helm
+```
+[lumi@fhmtps91ba79aa5re88e ~]$ curl https://get.helm.sh/helm-v3.14.2-linux-386.tar.gz -o helm-v3.14.2-linux-386.tar.gz
+[lumi@fhmtps91ba79aa5re88e ~]$ sudo mv linux-386/helm /usr/local/bin/helm
+[lumi@fhmtps91ba79aa5re88e ~]$ helm version
+version.BuildInfo{Version:"v3.14.2", GitCommit:"c309b6f0ff63856811846ce18f3bdc93d2b4d54b", GitTreeState:"clean", GoVersion:"go1.21.7"}
+```
+
+Выполним команду, выданную после регистрации агента, на ВМ, где развернут minikube
+```
+[lumi@fhmtps91ba79aa5re88e ~]$ helm repo add gitlab https://charts.gitlab.io
+"gitlab" has been added to your repositories
+[lumi@fhmtps91ba79aa5re88e ~]$ helm repo update
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "gitlab" chart repository
+Update Complete. ⎈Happy Helming!⎈
+[lumi@fhmtps91ba79aa5re88e ~]$ helm upgrade --install k8s-connection gitlab/gitlab-agent \
+>     --namespace gitlab-agent-k8s-connection \
+>     --create-namespace \
+>     --set image.tag=v16.9.2 \
+>     --set config.token=glagent-Xdy47-bNjHAATHx8wSh7sXWw7nH4sn6zvEyny64gDQrEFshNnw \
+>     --set config.kasAddress=ws://51.250.122.236/-/kubernetes-agent/
+Release "k8s-connection" has been upgraded. Happy Helming!
+NAME: k8s-connection
+LAST DEPLOYED: Fri Mar  1 20:11:13 2024
+NAMESPACE: gitlab-agent-k8s-connection
+STATUS: deployed
+REVISION: 4
+TEST SUITE: None
+NOTES:
+Thank you for installing gitlab-agent.
+
+Your release is named k8s-connection.
+
+## Changelog
+
+### 1.17.0
+
+- The default replica count has been increased from `1` to `2` to allow a zero-downtime upgrade experience.
+  You may use `--set replicas=1` to restore the old default behavior.
+
+```
+
+С помощью команды ` kubectl logs -f -l=app.kubernetes.io/name=gitlab-agent -n  gitlab-agent-k8s-connection` можно посмотреть логи агента
+
 
 # Содержимое проекта
 Исходный код приложения [python-demoapp](https://github.com/benc-uk/python-demoapp) добавим в локальный GitLab-проект
