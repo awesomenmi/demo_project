@@ -14,11 +14,11 @@
 В данном репозитории расположены инструкция и исходные файлы развертывания инфраструктуры для деплоя python-приложения в minikube-кластер посредством GitLab.
 Инстанс Gitlab и runner для него разворачивается в Docker на ВМ. На этой же ВМ был поднят minikube-кластер.
 ## Схема
-![schema.drawio.svg](screenshots/schema.drawio.svg)
+![schema.drawio.svg](res/schema.drawio.svg)
 
 # Настройка окружения
 Все последующие действия производились на виртуальной машине, развернутой в Яндекс.Облако со следующими характеристиками:
-![image](screenshots/vm_stats.png)
+![image](res/vm_stats.png)
 ## Установка Docker
 Установим Docker
 ```
@@ -47,7 +47,7 @@ docker exec -it gitlab gitlab-rake "gitlab:password:reset[root]"
 ```
 ### Подключение runner к инстансу GitLab 
 Для этого необходимо найти регистрационный токен: _Project -> CI/CD Settings -> Runners_
-![image](screenshots/token_runner.png)
+![image](res/token_runner.png)
 
 Зарегистрируем runner
 ```
@@ -120,7 +120,7 @@ shutdown_timeout = 0
 
 [[runners]]
   name = "docker runner"
-  url = "http://51.250.122.204:8080/"
+  url = "http://x.x.x.x:8080/"
   id = 5
   token = "c9UwQpzP_MJcrgZ8Q-hM"
   token_obtained_at = 2024-02-19T13:20:38Z
@@ -197,10 +197,8 @@ X Docker is nearly out of disk space, which may cause deployments to fail! (86% 
 * Documentation: https://docs.docker.com/engine/install/linux-postinstall/
 ```
 ## Подключение GitLab к k8s через агента
-Создадим файл конфигурации агента .gitlab/agents/k8s-connection/config.yaml
-Затем выберем его при регистрации агента в разделе _Operate -> Kubernetes clusters -> Connect a cluster_ и зарегистрируем агент.
 
-Подключим kubernetes agent server. Для этого необходимо выставить значение параметра `gitlab_kas['enable'] = true` в конфигурационном файле
+Подключим kubernetes agent server. Для этого необходимо выставить значение параметра `gitlab_kas['enable'] = true` в конфигурационном файле и переконфигурировать GitLab командой `gitlab-ctl reconfigure`
 
 ```
 [lumi@fhmtps91ba79aa5re88e ~]$ docker exec -it gitlab bash
@@ -211,6 +209,15 @@ root@5e01bc6a81bb:/# cat /etc/gitlab/gitlab.rb | grep "gitlab_kas\['enable'\]"
 gitlab_kas['enable'] = true
 root@5e01bc6a81bb:/# gitlab-ctl reconfigure
 ```
+Создадим файл конфигурации агента `.gitlab/agents/k8s-connection/config.yaml` в отдельном сервисном репозитории _k8s-connection_ со следующим содержимым
+```
+ci_access:
+  projects:
+    - id: root/my_project
+```
+Где `root/my_project` - путь до нашего проекта
+
+Затем выберем его при регистрации агента в разделе _Operate -> Kubernetes clusters -> Connect a cluster_ и зарегистрируем агент.
 
 Установим helm
 ```
@@ -307,5 +314,177 @@ spec:
 ## Описание этапов pipeline-a
 
 Код pipelin-a [.gitlab-ci.yml](https://github.com/awesomenmi/demo_project/blob/main/.gitlab-ci.yml)
+
+### test
+<details>
+
+<summary>Установка утилиты _make_ и запуск тестов</summary>
+Running with gitlab-runner 16.9.0 (656c1943)
+  on docker ntBZRsda, system ID: r_Tyz9ItF5DV3n
+Preparing the "docker" executor
+00:04
+Preparing environment
+00:00
+Running on runner-ntbzrsda-project-1-concurrent-0 via d7051176ef5d...
+Getting source from Git repository
+00:02
+Fetching changes with git depth set to 20...
+Reinitialized existing Git repository in /builds/root/my_project/.git/
+Checking out bfcbdbaa as detached HEAD (ref is main)...
+Skipping Git submodules setup
+Executing "step_script" stage of the job script
+00:57
+Using docker image sha256:c84dbfe3b8deeb39e17d121220107f8354a9083b468a320a77708cd128f11c87 for python:3.9-slim-buster with digest python@sha256:320a7a4250aba4249f458872adecf92eea88dc6abd2d76dc5c0f01cac9b53990 ...
+$ apt-get update && apt-get install make
+Get:1 http://deb.debian.org/debian buster InRelease [122 kB]
+Get:2 http://deb.debian.org/debian-security buster/updates InRelease [34.8 kB]
+Get:3 http://deb.debian.org/debian buster-updates InRelease [56.6 kB]
+Get:4 http://deb.debian.org/debian buster/main amd64 Packages [7909 kB]
+Get:5 http://deb.debian.org/debian-security buster/updates/main amd64 Packages [587 kB]
+Get:6 http://deb.debian.org/debian buster-updates/main amd64 Packages [8788 B]
+Fetched 8718 kB in 3s (3356 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+Suggested packages:
+  make-doc
+The following NEW packages will be installed:
+  make
+0 upgraded, 1 newly installed, 0 to remove and 11 not upgraded.
+Need to get 341 kB of archives.
+After this operation, 1327 kB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian buster/main amd64 make amd64 4.2.1-1.2 [341 kB]
+debconf: delaying package configuration, since apt-utils is not installed
+Fetched 341 kB in 0s (2609 kB/s)
+Selecting previously unselected package make.
+(Reading database ... 6843 files and directories currently installed.)
+Preparing to unpack .../make_4.2.1-1.2_amd64.deb ...
+Unpacking make (4.2.1-1.2) ...
+Setting up make (4.2.1-1.2) ...
+$ make test
+python3 -m venv src/.venv
+make: git: Command not found
+. src/.venv/bin/activate; pip install -Ur src/requirements.txt
+Collecting Flask==2.1.0
+  Downloading Flask-2.1.0-py3-none-any.whl (95 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 95.2/95.2 kB 346.6 kB/s eta 0:00:00
+Collecting py-cpuinfo==7.0.0
+  Downloading py-cpuinfo-7.0.0.tar.gz (95 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 95.9/95.9 kB 937.3 kB/s eta 0:00:00
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting psutil==5.8.0
+  Downloading psutil-5.8.0-cp39-cp39-manylinux2010_x86_64.whl (293 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 293.5/293.5 kB 3.0 MB/s eta 0:00:00
+Collecting gunicorn==20.1.0
+  Downloading gunicorn-20.1.0-py3-none-any.whl (79 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 79.5/79.5 kB 318.8 kB/s eta 0:00:00
+Collecting black==20.8b1
+  Downloading black-20.8b1.tar.gz (1.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 24.4 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting flake8==3.9.0
+  Downloading flake8-3.9.0-py2.py3-none-any.whl (73 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 73.1/73.1 kB 12.9 MB/s eta 0:00:00
+Collecting pytest==6.2.2
+  Downloading pytest-6.2.2-py3-none-any.whl (280 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 280.1/280.1 kB 44.6 MB/s eta 0:00:00
+Collecting werkzeug==2.2.2
+  Downloading Werkzeug-2.2.2-py3-none-any.whl (232 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 232.7/232.7 kB 15.1 MB/s eta 0:00:00
+Collecting click>=8.0
+  Downloading click-8.1.7-py3-none-any.whl (97 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.9/97.9 kB 16.6 MB/s eta 0:00:00
+Collecting itsdangerous>=2.0
+  Downloading itsdangerous-2.1.2-py3-none-any.whl (15 kB)
+Collecting Jinja2>=3.0
+  Downloading Jinja2-3.1.3-py3-none-any.whl (133 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.2/133.2 kB 20.0 MB/s eta 0:00:00
+Collecting importlib-metadata
+  Downloading importlib_metadata-7.0.1-py3-none-any.whl (23 kB)
+Requirement already satisfied: setuptools>=3.0 in ./src/.venv/lib/python3.9/site-packages (from gunicorn==20.1.0->-r src/requirements.txt (line 4)) (58.1.0)
+Collecting toml>=0.10.1
+  Downloading toml-0.10.2-py2.py3-none-any.whl (16 kB)
+Collecting regex>=2020.1.8
+  Downloading regex-2023.12.25-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (773 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 773.4/773.4 kB 25.6 MB/s eta 0:00:00
+Collecting pathspec<1,>=0.6
+  Downloading pathspec-0.12.1-py3-none-any.whl (31 kB)
+Collecting typing-extensions>=3.7.4
+  Using cached typing_extensions-4.10.0-py3-none-any.whl (33 kB)
+Collecting typed-ast>=1.4.0
+  Downloading typed_ast-1.5.5-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (823 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 823.4/823.4 kB 30.9 MB/s eta 0:00:00
+Collecting mypy-extensions>=0.4.3
+  Downloading mypy_extensions-1.0.0-py3-none-any.whl (4.7 kB)
+Collecting appdirs
+  Downloading appdirs-1.4.4-py2.py3-none-any.whl (9.6 kB)
+Collecting pyflakes<2.4.0,>=2.3.0
+  Downloading pyflakes-2.3.1-py2.py3-none-any.whl (68 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 68.8/68.8 kB 1.4 MB/s eta 0:00:00
+Collecting mccabe<0.7.0,>=0.6.0
+  Downloading mccabe-0.6.1-py2.py3-none-any.whl (8.6 kB)
+Collecting pycodestyle<2.8.0,>=2.7.0
+  Downloading pycodestyle-2.7.0-py2.py3-none-any.whl (41 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 41.7/41.7 kB 1.6 MB/s eta 0:00:00
+Collecting pluggy<1.0.0a1,>=0.12
+  Downloading pluggy-0.13.1-py2.py3-none-any.whl (18 kB)
+Collecting iniconfig
+  Downloading iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
+Collecting py>=1.8.2
+  Downloading py-1.11.0-py2.py3-none-any.whl (98 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 98.7/98.7 kB 9.4 MB/s eta 0:00:00
+Collecting packaging
+  Using cached packaging-23.2-py3-none-any.whl (53 kB)
+Collecting attrs>=19.2.0
+  Downloading attrs-23.2.0-py3-none-any.whl (60 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.8/60.8 kB 7.1 MB/s eta 0:00:00
+Collecting MarkupSafe>=2.1.1
+  Downloading MarkupSafe-2.1.5-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (25 kB)
+Collecting zipp>=0.5
+  Downloading zipp-3.17.0-py3-none-any.whl (7.4 kB)
+Building wheels for collected packages: black
+  Building wheel for black (pyproject.toml): started
+  Building wheel for black (pyproject.toml): finished with status 'done'
+  Created wheel for black: filename=black-20.8b1-py3-none-any.whl size=124171 sha256=395504b32ff8c4c7762c423fe5916c59f9772698fb39090ef45c53bdcdd47d4b
+  Stored in directory: /root/.cache/pip/wheels/4e/57/9a/e704bdd859ee892dc46fff03fd499422dc9e99fd9bd5c446d3
+Successfully built black
+Installing collected packages: py-cpuinfo, mccabe, appdirs, zipp, typing-extensions, typed-ast, toml, regex, pyflakes, pycodestyle, py, psutil, pluggy, pathspec, packaging, mypy-extensions, MarkupSafe, itsdangerous, iniconfig, gunicorn, click, attrs, werkzeug, pytest, Jinja2, importlib-metadata, flake8, black, Flask
+  DEPRECATION: py-cpuinfo is being installed using the legacy 'setup.py install' method, because it does not have a 'pyproject.toml' and the 'wheel' package is not installed. pip 23.1 will enforce this behaviour change. A possible replacement is to enable the '--use-pep517' option. Discussion can be found at https://github.com/pypa/pip/issues/8559
+  Running setup.py install for py-cpuinfo: started
+  Running setup.py install for py-cpuinfo: finished with status 'done'
+Successfully installed Flask-2.1.0 Jinja2-3.1.3 MarkupSafe-2.1.5 appdirs-1.4.4 attrs-23.2.0 black-20.8b1 click-8.1.7 flake8-3.9.0 gunicorn-20.1.0 importlib-metadata-7.0.1 iniconfig-2.0.0 itsdangerous-2.1.2 mccabe-0.6.1 mypy-extensions-1.0.0 packaging-23.2 pathspec-0.12.1 pluggy-0.13.1 psutil-5.8.0 py-1.11.0 py-cpuinfo-7.0.0 pycodestyle-2.7.0 pyflakes-2.3.1 pytest-6.2.2 regex-2023.12.25 toml-0.10.2 typed-ast-1.5.5 typing-extensions-4.10.0 werkzeug-2.2.2 zipp-3.17.0
+[notice] A new release of pip is available: 23.0.1 -> 24.0
+[notice] To update, run: pip install --upgrade pip
+touch src/.venv/touchfile
+. src/.venv/bin/activate \
+&& pytest -v
+make: git: Command not found
+============================= test session starts ==============================
+platform linux -- Python 3.9.17, pytest-6.2.2, py-1.11.0, pluggy-0.13.1 -- /builds/root/my_project/src/.venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /builds/root/my_project
+collecting ... collected 4 items
+src/app/tests/test_api.py::test_api_monitor PASSED                       [ 25%]
+src/app/tests/test_views.py::test_home PASSED                            [ 50%]
+src/app/tests/test_views.py::test_page_content PASSED                    [ 75%]
+src/app/tests/test_views.py::test_info PASSED                            [100%]
+============================== 4 passed in 3.04s ===============================
+Job succeeded
+</details>
+
+
+### build
+Сборка Docker-образа и его дальнейшая загрузка в Docker-registry
+
+### deploy
+Подгрузка контекста с ранее настроеным агентом
+Деплой приложения в кластер
 
  kubectl port-forward svc/demo-app-service --address=0.0.0.0 5000:5000
