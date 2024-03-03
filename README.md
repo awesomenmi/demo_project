@@ -319,263 +319,170 @@ spec:
 <details>
 
 <summary>Установка утилиты _make_ и запуск тестов</summary>
-Running with gitlab-runner 16.9.0 (656c1943)
-  on docker ntBZRsda, system ID: r_Tyz9ItF5DV3n
-Preparing the "docker" executor
-00:04
-Preparing environment
-00:00
-Running on runner-ntbzrsda-project-1-concurrent-0 via d7051176ef5d...
-Getting source from Git repository
-00:02
-Fetching changes with git depth set to 20...
-Reinitialized existing Git repository in /builds/root/my_project/.git/
-Checking out bfcbdbaa as detached HEAD (ref is main)...
-Skipping Git submodules setup
-Executing "step_script" stage of the job script
-00:57
-Using docker image sha256:c84dbfe3b8deeb39e17d121220107f8354a9083b468a320a77708cd128f11c87 for python:3.9-slim-buster with digest python@sha256:320a7a4250aba4249f458872adecf92eea88dc6abd2d76dc5c0f01cac9b53990 ...
-$ apt-get update && apt-get install make
-Get:1 http://deb.debian.org/debian buster InRelease [122 kB]
-Get:2 http://deb.debian.org/debian-security buster/updates InRelease [34.8 kB]
-Get:3 http://deb.debian.org/debian buster-updates InRelease [56.6 kB]
-Get:4 http://deb.debian.org/debian buster/main amd64 Packages [7909 kB]
-Get:5 http://deb.debian.org/debian-security buster/updates/main amd64 Packages [587 kB]
-Get:6 http://deb.debian.org/debian buster-updates/main amd64 Packages [8788 B]
-Fetched 8718 kB in 3s (3356 kB/s)
-Reading package lists...
-Reading package lists...
-Building dependency tree...
-Reading state information...
-Suggested packages:
-  make-doc
-The following NEW packages will be installed:
-  make
-0 upgraded, 1 newly installed, 0 to remove and 11 not upgraded.
-Need to get 341 kB of archives.
-After this operation, 1327 kB of additional disk space will be used.
-Get:1 http://deb.debian.org/debian buster/main amd64 make amd64 4.2.1-1.2 [341 kB]
-debconf: delaying package configuration, since apt-utils is not installed
-Fetched 341 kB in 0s (2609 kB/s)
-Selecting previously unselected package make.
-(Reading database ... 6843 files and directories currently installed.)
-Preparing to unpack .../make_4.2.1-1.2_amd64.deb ...
-Unpacking make (4.2.1-1.2) ...
-Setting up make (4.2.1-1.2) ...
-$ make test
-python3 -m venv src/.venv
-make: git: Command not found
-. src/.venv/bin/activate; pip install -Ur src/requirements.txt
-Collecting Flask==2.1.0
-  Downloading Flask-2.1.0-py3-none-any.whl (95 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 95.2/95.2 kB 346.6 kB/s eta 0:00:00
-Collecting py-cpuinfo==7.0.0
-  Downloading py-cpuinfo-7.0.0.tar.gz (95 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 95.9/95.9 kB 937.3 kB/s eta 0:00:00
-  Preparing metadata (setup.py): started
-  Preparing metadata (setup.py): finished with status 'done'
-Collecting psutil==5.8.0
-  Downloading psutil-5.8.0-cp39-cp39-manylinux2010_x86_64.whl (293 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 293.5/293.5 kB 3.0 MB/s eta 0:00:00
-Collecting gunicorn==20.1.0
-  Downloading gunicorn-20.1.0-py3-none-any.whl (79 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 79.5/79.5 kB 318.8 kB/s eta 0:00:00
-Collecting black==20.8b1
-  Downloading black-20.8b1.tar.gz (1.1 MB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 24.4 MB/s eta 0:00:00
-  Installing build dependencies: started
-  Installing build dependencies: finished with status 'done'
-  Getting requirements to build wheel: started
-  Getting requirements to build wheel: finished with status 'done'
-  Preparing metadata (pyproject.toml): started
-  Preparing metadata (pyproject.toml): finished with status 'done'
-Collecting flake8==3.9.0
-  Downloading flake8-3.9.0-py2.py3-none-any.whl (73 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 73.1/73.1 kB 12.9 MB/s eta 0:00:00
-Collecting pytest==6.2.2
-  Downloading pytest-6.2.2-py3-none-any.whl (280 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 280.1/280.1 kB 44.6 MB/s eta 0:00:00
-Collecting werkzeug==2.2.2
-  Downloading Werkzeug-2.2.2-py3-none-any.whl (232 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 232.7/232.7 kB 15.1 MB/s eta 0:00:00
-Collecting click>=8.0
-  Downloading click-8.1.7-py3-none-any.whl (97 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.9/97.9 kB 16.6 MB/s eta 0:00:00
-Collecting itsdangerous>=2.0
-  Downloading itsdangerous-2.1.2-py3-none-any.whl (15 kB)
-Collecting Jinja2>=3.0
-  Downloading Jinja2-3.1.3-py3-none-any.whl (133 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.2/133.2 kB 20.0 MB/s eta 0:00:00
-Collecting importlib-metadata
-  Downloading importlib_metadata-7.0.1-py3-none-any.whl (23 kB)
-Requirement already satisfied: setuptools>=3.0 in ./src/.venv/lib/python3.9/site-packages (from gunicorn==20.1.0->-r src/requirements.txt (line 4)) (58.1.0)
-Collecting toml>=0.10.1
-  Downloading toml-0.10.2-py2.py3-none-any.whl (16 kB)
-Collecting regex>=2020.1.8
-  Downloading regex-2023.12.25-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (773 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 773.4/773.4 kB 25.6 MB/s eta 0:00:00
-Collecting pathspec<1,>=0.6
-  Downloading pathspec-0.12.1-py3-none-any.whl (31 kB)
-Collecting typing-extensions>=3.7.4
-  Using cached typing_extensions-4.10.0-py3-none-any.whl (33 kB)
-Collecting typed-ast>=1.4.0
-  Downloading typed_ast-1.5.5-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (823 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 823.4/823.4 kB 30.9 MB/s eta 0:00:00
-Collecting mypy-extensions>=0.4.3
-  Downloading mypy_extensions-1.0.0-py3-none-any.whl (4.7 kB)
-Collecting appdirs
-  Downloading appdirs-1.4.4-py2.py3-none-any.whl (9.6 kB)
-Collecting pyflakes<2.4.0,>=2.3.0
-  Downloading pyflakes-2.3.1-py2.py3-none-any.whl (68 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 68.8/68.8 kB 1.4 MB/s eta 0:00:00
-Collecting mccabe<0.7.0,>=0.6.0
-  Downloading mccabe-0.6.1-py2.py3-none-any.whl (8.6 kB)
-Collecting pycodestyle<2.8.0,>=2.7.0
-  Downloading pycodestyle-2.7.0-py2.py3-none-any.whl (41 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 41.7/41.7 kB 1.6 MB/s eta 0:00:00
-Collecting pluggy<1.0.0a1,>=0.12
-  Downloading pluggy-0.13.1-py2.py3-none-any.whl (18 kB)
-Collecting iniconfig
-  Downloading iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
-Collecting py>=1.8.2
-  Downloading py-1.11.0-py2.py3-none-any.whl (98 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 98.7/98.7 kB 9.4 MB/s eta 0:00:00
-Collecting packaging
-  Using cached packaging-23.2-py3-none-any.whl (53 kB)
-Collecting attrs>=19.2.0
-  Downloading attrs-23.2.0-py3-none-any.whl (60 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.8/60.8 kB 7.1 MB/s eta 0:00:00
-Collecting MarkupSafe>=2.1.1
-  Downloading MarkupSafe-2.1.5-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (25 kB)
-Collecting zipp>=0.5
-  Downloading zipp-3.17.0-py3-none-any.whl (7.4 kB)
-Building wheels for collected packages: black
-  Building wheel for black (pyproject.toml): started
-  Building wheel for black (pyproject.toml): finished with status 'done'
-  Created wheel for black: filename=black-20.8b1-py3-none-any.whl size=124171 sha256=395504b32ff8c4c7762c423fe5916c59f9772698fb39090ef45c53bdcdd47d4b
-  Stored in directory: /root/.cache/pip/wheels/4e/57/9a/e704bdd859ee892dc46fff03fd499422dc9e99fd9bd5c446d3
-Successfully built black
-Installing collected packages: py-cpuinfo, mccabe, appdirs, zipp, typing-extensions, typed-ast, toml, regex, pyflakes, pycodestyle, py, psutil, pluggy, pathspec, packaging, mypy-extensions, MarkupSafe, itsdangerous, iniconfig, gunicorn, click, attrs, werkzeug, pytest, Jinja2, importlib-metadata, flake8, black, Flask
-  DEPRECATION: py-cpuinfo is being installed using the legacy 'setup.py install' method, because it does not have a 'pyproject.toml' and the 'wheel' package is not installed. pip 23.1 will enforce this behaviour change. A possible replacement is to enable the '--use-pep517' option. Discussion can be found at https://github.com/pypa/pip/issues/8559
-  Running setup.py install for py-cpuinfo: started
-  Running setup.py install for py-cpuinfo: finished with status 'done'
-Successfully installed Flask-2.1.0 Jinja2-3.1.3 MarkupSafe-2.1.5 appdirs-1.4.4 attrs-23.2.0 black-20.8b1 click-8.1.7 flake8-3.9.0 gunicorn-20.1.0 importlib-metadata-7.0.1 iniconfig-2.0.0 itsdangerous-2.1.2 mccabe-0.6.1 mypy-extensions-1.0.0 packaging-23.2 pathspec-0.12.1 pluggy-0.13.1 psutil-5.8.0 py-1.11.0 py-cpuinfo-7.0.0 pycodestyle-2.7.0 pyflakes-2.3.1 pytest-6.2.2 regex-2023.12.25 toml-0.10.2 typed-ast-1.5.5 typing-extensions-4.10.0 werkzeug-2.2.2 zipp-3.17.0
-[notice] A new release of pip is available: 23.0.1 -> 24.0
-[notice] To update, run: pip install --upgrade pip
-touch src/.venv/touchfile
-. src/.venv/bin/activate \
-&& pytest -v
-make: git: Command not found
-============================= test session starts ==============================
-platform linux -- Python 3.9.17, pytest-6.2.2, py-1.11.0, pluggy-0.13.1 -- /builds/root/my_project/src/.venv/bin/python3
-cachedir: .pytest_cache
-rootdir: /builds/root/my_project
-collecting ... collected 4 items
-src/app/tests/test_api.py::test_api_monitor PASSED                       [ 25%]
-src/app/tests/test_views.py::test_home PASSED                            [ 50%]
-src/app/tests/test_views.py::test_page_content PASSED                    [ 75%]
-src/app/tests/test_views.py::test_info PASSED                            [100%]
-============================== 4 passed in 3.04s ===============================
-Job succeeded
+<br>Running with gitlab-runner 16.9.0 (656c1943)
+  <br>on docker ntBZRsda, system ID: r_Tyz9ItF5DV3n
+<br>Preparing the "docker" executor
+<br>00:04
+<br>Preparing environment
+<br>00:00
+<br>Running on runner-ntbzrsda-project-1-concurrent-0 via d7051176ef5d...
+<br>Getting source from Git repository
+<br>00:02
+<br>Fetching changes with git depth set to 20...
+<br>Reinitialized existing Git repository in /builds/root/my_project/.git/
+<br>Checking out bfcbdbaa as detached HEAD (ref is main)...
+<br>Skipping Git submodules setup
+<br>Executing "step_script" stage of the job script
+<br>00:57
+Using docker image sha256:c84dbfe3b8deeb39e17d121220107f8354a9083b468a320a77708cd128f11c87 for python:3.9-slim-buster with digest <br>python@sha256:320a7a4250aba4249f458872adecf92eea88dc6abd2d76dc5c0f01cac9b53990 ...
+<br>$ apt-get update && apt-get install make
+<br>Get:1 http://deb.debian.org/debian buster InRelease [122 kB]
+<br>Get:2 http://deb.debian.org/debian-security buster/updates InRelease [34.8 kB]
+<br>Get:3 http://deb.debian.org/debian buster-updates InRelease [56.6 kB]
+<br>Get:4 http://deb.debian.org/debian buster/main amd64 Packages [7909 kB]
+<br>Get:5 http://deb.debian.org/debian-security buster/updates/main amd64 Packages [587 kB]
+<br>Get:6 http://deb.debian.org/debian buster-updates/main amd64 Packages [8788 B]
+<br>Fetched 8718 kB in 3s (3356 kB/s)
+<br>Reading package lists...
+<br>Reading package lists...
+<br>Building dependency tree...
+<br>Reading state information...
+<br>Suggested packages:
+  <br>make-doc
+<br>The following NEW packages will be installed:
+  <br>make
+<br>0 upgraded, 1 newly installed, 0 to remove and 11 not upgraded.
+<br>Need to get 341 kB of archives.
+<br>After this operation, 1327 kB of additional disk space will be used.
+<br>Get:1 http://deb.debian.org/debian buster/main amd64 make amd64 4.2.1-1.2 [341 kB]
+<br>debconf: delaying package configuration, since apt-utils is not installed
+<br>Fetched 341 kB in 0s (2609 kB/s)
+<br>Selecting previously unselected package make.
+<br>(Reading database ... 6843 files and directories currently installed.)
+<br>Preparing to unpack .../make_4.2.1-1.2_amd64.deb ...
+<br>Unpacking make (4.2.1-1.2) ...
+<br>Setting up make (4.2.1-1.2) ...
+<br>$ make test
+<br>python3 -m venv src/.venv
+<br>make: git: Command not found
+<br>. src/.venv/bin/activate; pip install -Ur src/requirements.txt
+<br>Collecting Flask==2.1.0
+  <br>Downloading Flask-2.1.0-py3-none-any.whl (95 kB)
+     <br>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 95.2/95.2 kB 346.6 kB/s eta 0:00:00
+<br>Collecting py-cpuinfo==7.0.0
+  <br>Downloading py-cpuinfo-7.0.0.tar.gz (95 kB)
+     <br>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 95.9/95.9 kB 937.3 kB/s eta 0:00:00
+  <br>Preparing metadata (setup.py): started
+  <br>Preparing metadata (setup.py): finished with status 'done'
+<br>Collecting psutil==5.8.0
+  <br>Downloading psutil-5.8.0-cp39-cp39-manylinux2010_x86_64.whl (293 kB)
+     <br>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 293.5/293.5 kB 3.0 MB/s eta 0:00:00
+<br>Collecting gunicorn==20.1.0
+  <br>Downloading gunicorn-20.1.0-py3-none-any.whl (79 kB)
+     <br>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 79.5/79.5 kB 318.8 kB/s eta 0:00:00
+<br>Collecting black==20.8b1
+  <br>Downloading black-20.8b1.tar.gz (1.1 MB)
+     <br>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 24.4 MB/s eta 0:00:00
+  <br>Installing build dependencies: started
+  <br>Installing build dependencies: finished with status 'done'
+  <br>Getting requirements to build wheel: started
+  <br>Getting requirements to build wheel: finished with status 'done'
+  <br>Preparing metadata (pyproject.toml): started
+  <br>Preparing metadata (pyproject.toml): finished with status 'done'
+<br>Collecting flake8==3.9.0
+  <br>Downloading flake8-3.9.0-py2.py3-none-any.whl (73 kB)
+     <br>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 73.1/73.1 kB 12.9 MB/s eta 0:00:00
+<br>Collecting pytest==6.2.2
+  <br>Downloading pytest-6.2.2-py3-none-any.whl (280 kB)
+     <br>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 280.1/280.1 kB 44.6 MB/s eta 0:00:00
+<br>Collecting werkzeug==2.2.2
+  <br>Downloading Werkzeug-2.2.2-py3-none-any.whl (232 kB)
+     <br>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 232.7/232.7 kB 15.1 MB/s eta 0:00:00
+<br>Collecting click>=8.0
+  <br>Downloading click-8.1.7-py3-none-any.whl (97 kB)
+     <br>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.9/97.9 kB 16.6 MB/s eta 0:00:00
+<br>Collecting itsdangerous>=2.0
+  <br>Downloading itsdangerous-2.1.2-py3-none-any.whl (15 kB)
+<br>Collecting Jinja2>=3.0
+  <br>Downloading Jinja2-3.1.3-py3-none-any.whl (133 kB)
+     <br>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.2/133.2 kB 20.0 MB/s eta 0:00:00
+<br>Collecting importlib-metadata
+  <br>Downloading importlib_metadata-7.0.1-py3-none-any.whl (23 kB)
+Requirement already satisfied: setuptools>=3.0 in ./src/.venv/lib/python3.9/site-packages (from gunicorn==20.1.0->-r src/<br>requirements.txt (line 4)) (58.1.0)
+<br>Collecting toml>=0.10.1
+  <br>Downloading toml-0.10.2-py2.py3-none-any.whl (16 kB)
+<br>Collecting regex>=2020.1.8
+  <br>Downloading regex-2023.12.25-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (773 kB)
+     <br>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 773.4/773.4 kB 25.6 MB/s eta 0:00:00
+<br>Collecting pathspec<1,>=0.6
+  <br>Downloading pathspec-0.12.1-py3-none-any.whl (31 kB)
+<br>Collecting typing-extensions>=3.7.4
+  <br>Using cached typing_extensions-4.10.0-py3-none-any.whl (33 kB)
+<br>Collecting typed-ast>=1.4.0
+  <br>Downloading typed_ast-1.5.5-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (823 kB)
+     <br>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 823.4/823.4 kB 30.9 MB/s eta 0:00:00
+<br>Collecting mypy-extensions>=0.4.3
+  <br>Downloading mypy_extensions-1.0.0-py3-none-any.whl (4.7 kB)
+<br>Collecting appdirs
+  <br>Downloading appdirs-1.4.4-py2.py3-none-any.whl (9.6 kB)
+<br>Collecting pyflakes<2.4.0,>=2.3.0
+  <br>Downloading pyflakes-2.3.1-py2.py3-none-any.whl (68 kB)
+     <br>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 68.8/68.8 kB 1.4 MB/s eta 0:00:00
+<br>Collecting mccabe<0.7.0,>=0.6.0
+  <br>Downloading mccabe-0.6.1-py2.py3-none-any.whl (8.6 kB)
+<br>Collecting pycodestyle<2.8.0,>=2.7.0
+  <br>Downloading pycodestyle-2.7.0-py2.py3-none-any.whl (41 kB)
+     <br>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 41.7/41.7 kB 1.6 MB/s eta 0:00:00
+<br>Collecting pluggy<1.0.0a1,>=0.12
+  <br>Downloading pluggy-0.13.1-py2.py3-none-any.whl (18 kB)
+<br>Collecting iniconfig
+  <br>Downloading iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
+<br>Collecting py>=1.8.2
+  <br>Downloading py-1.11.0-py2.py3-none-any.whl (98 kB)
+     <br>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 98.7/98.7 kB 9.4 MB/s eta 0:00:00
+<br>Collecting packaging
+  <br>Using cached packaging-23.2-py3-none-any.whl (53 kB)
+<br>Collecting attrs>=19.2.0
+  <br>Downloading attrs-23.2.0-py3-none-any.whl (60 kB)
+     <br>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.8/60.8 kB 7.1 MB/s eta 0:00:00
+<br>Collecting MarkupSafe>=2.1.1
+  <br>Downloading MarkupSafe-2.1.5-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (25 kB)
+<br>Collecting zipp>=0.5
+  <br>Downloading zipp-3.17.0-py3-none-any.whl (7.4 kB)
+<br>Building wheels for collected packages: black
+  <br>Building wheel for black (pyproject.toml): started
+  <br>Building wheel for black (pyproject.toml): finished with status 'done'
+  Created wheel for black: filename=black-20.8b1-py3-none-any.whl size=124171 <br>sha256=395504b32ff8c4c7762c423fe5916c59f9772698fb39090ef45c53bdcdd47d4b
+  <br>Stored in directory: /root/.cache/pip/wheels/4e/57/9a/e704bdd859ee892dc46fff03fd499422dc9e99fd9bd5c446d3
+<br>Successfully built black
+Installing collected packages: py-cpuinfo, mccabe, appdirs, zipp, typing-extensions, typed-ast, toml, regex, pyflakes, pycodestyle, py, psutil, pluggy, pathspec, packaging, mypy-extensions, MarkupSafe, itsdangerous, iniconfig, gunicorn, click, attrs, werkzeug, <br>pytest, Jinja2, importlib-metadata, flake8, black, Flask
+  DEPRECATION: py-cpuinfo is being installed using the legacy 'setup.py install' method, because it does not have a 'pyproject.toml' and the 'wheel' package is not installed. pip 23.1 will enforce this behaviour change. A possible replacement is to enable the <br>'--use-pep517' option. Discussion can be found at https://github.com/pypa/pip/issues/8559
+  <br>Running setup.py install for py-cpuinfo: started
+  <br>Running setup.py install for py-cpuinfo: finished with status 'done'
+Successfully installed Flask-2.1.0 Jinja2-3.1.3 MarkupSafe-2.1.5 appdirs-1.4.4 attrs-23.2.0 black-20.8b1 click-8.1.7 flake8-3.9.0 gunicorn-20.1.0 importlib-metadata-7.0.1 iniconfig-2.0.0 itsdangerous-2.1.2 mccabe-0.6.1 mypy-extensions-1.0.0 packaging-23.2 pathspec-0.12.1 pluggy-0.13.1 psutil-5.8.0 py-1.11.0 py-cpuinfo-7.0.0 pycodestyle-2.7.0 pyflakes-2.3.1 pytest-6.2.2 regex-2023.12.25 <br>toml-0.10.2 typed-ast-1.5.5 typing-extensions-4.10.0 werkzeug-2.2.2 zipp-3.17.0
+<br>[notice] A new release of pip is available: 23.0.1 -> 24.0
+<br>[notice] To update, run: pip install --upgrade pip
+<br>touch src/.venv/touchfile
+<br>. src/.venv/bin/activate \
+<br>&& pytest -v
+<br>make: git: Command not found
+<br>============================= test session starts ==============================
+<br>platform linux -- Python 3.9.17, pytest-6.2.2, py-1.11.0, pluggy-0.13.1 -- /builds/root/my_project/src/.venv/bin/python3
+<br>cachedir: .pytest_cache
+<br>rootdir: /builds/root/my_project
+<br>collecting ... collected 4 items
+<br>src/app/tests/test_api.py::test_api_monitor PASSED                       [ 25%]
+<br>src/app/tests/test_views.py::test_home PASSED                            [ 50%]
+<br>src/app/tests/test_views.py::test_page_content PASSED                    [ 75%]
+<br>src/app/tests/test_views.py::test_info PASSED                            [100%]
+<br>============================== 4 passed in 3.04s ===============================
+<br>Job succeeded
+
 </details>
 
 
 ### build
 Сборка Docker-образа и его дальнейшая загрузка в Docker-registry
-<details>
-<br>Running with gitlab-runner 16.9.0 (656c1943)
-<br>  on docker ntBZRsda, system ID: r_Tyz9ItF5DV3n
-<br>Preparing the "docker" executor
-<br>00:04
-Using Docker executor with image docker:dind ...
-Pulling docker image docker:dind ...
-Using docker image sha256:e5fbe8997fd9ff8f2894874c12a4fbc5fc1bb42d08a7db8433bbe09066562a2a for docker:dind with digest docker@sha256:0d70c541ee98e66b8f7ece8c0e9f7910732466e337a9087c2ac2868ef0775092 ...
-Preparing environment
-00:01
-Running on runner-ntbzrsda-project-1-concurrent-0 via d7051176ef5d...
-Getting source from Git repository
-00:02
-Fetching changes with git depth set to 20...
-Reinitialized existing Git repository in /builds/root/my_project/.git/
-Checking out bfcbdbaa as detached HEAD (ref is main)...
-Removing .pytest_cache/
-Removing src/.venv/
-Removing src/app/__pycache__/
-Removing src/app/tests/__pycache__/
-Skipping Git submodules setup
-Executing "step_script" stage of the job script
-00:11
-Using docker image sha256:e5fbe8997fd9ff8f2894874c12a4fbc5fc1bb42d08a7db8433bbe09066562a2a for docker:dind with digest docker@sha256:0d70c541ee98e66b8f7ece8c0e9f7910732466e337a9087c2ac2868ef0775092 ...
-$ docker login -u $REGISTRY_USER -p $REGISTRY_PASS
-WARNING! Using --password via the CLI is insecure. Use --password-stdin.
-WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
-Configure a credential helper to remove this warning. See
-https://docs.docker.com/engine/reference/commandline/login/#credentials-store
-Login Succeeded
-$ docker build -t $IMAGE_NAME:$IMAGE_TAG .
-#0 building with "default" instance using docker driver
-#1 [internal] load build definition from Dockerfile
-#1 DONE 0.0s
-#1 [internal] load build definition from Dockerfile
-#1 transferring dockerfile:
-#1 transferring dockerfile: 482B done
-#1 DONE 0.8s
-#2 [internal] load metadata for docker.io/library/python:3.9-slim-buster
-#2 DONE 0.0s
-#3 [internal] load .dockerignore
-#3 transferring context:
-#3 transferring context: 123B done
-#3 DONE 0.1s
-#4 [1/6] FROM docker.io/library/python:3.9-slim-buster
-#4 DONE 0.0s
-#5 [internal] load build context
-#5 transferring context: 217.28kB done
-#5 DONE 0.1s
-#6 [2/6] WORKDIR /app
-#6 CACHED
-#7 [3/6] COPY src/requirements.txt .
-#7 CACHED
-#8 [4/6] RUN pip install --no-cache-dir -r requirements.txt
-#8 CACHED
-#9 [5/6] COPY src/run.py .
-#9 CACHED
-#10 [6/6] COPY src/app ./app
-#10 CACHED
-#11 exporting to image
-#11 exporting layers done
-#11 writing image sha256:837aae53468f18cb6fbd05065008b02f1f38344e9b153b448c8e7c4ae13aaca5 done
-#11 naming to docker.io/luminescencia/demo-app:1.0 0.0s done
-#11 DONE 0.0s
-$ docker push $IMAGE_NAME:$IMAGE_TAG
-The push refers to repository [docker.io/luminescencia/demo-app]
-95ba18b4011d: Preparing
-946972809162: Preparing
-bd8ddbc8ff65: Preparing
-e023d039975e: Preparing
-a29091498ccb: Preparing
-067ea27560c1: Preparing
-7fb1037e08b3: Preparing
-14cbeede8d6e: Preparing
-ae2d55769c5e: Preparing
-e2ef8a51359d: Preparing
-067ea27560c1: Waiting
-7fb1037e08b3: Waiting
-14cbeede8d6e: Waiting
-ae2d55769c5e: Waiting
-e2ef8a51359d: Waiting
-946972809162: Layer already exists
-95ba18b4011d: Layer already exists
-a29091498ccb: Layer already exists
-e023d039975e: Layer already exists
-bd8ddbc8ff65: Layer already exists
-067ea27560c1: Layer already exists
-7fb1037e08b3: Layer already exists
-ae2d55769c5e: Layer already exists
-14cbeede8d6e: Layer already exists
-e2ef8a51359d: Layer already exists
-1.0: digest: sha256:606e902b5bd2b346b47529579763e633de4a8628125e5ccf01316c51f3f33415 size: 2411
-Job succeeded
-</details>
 
 ### deploy
 Подгрузка контекста с ранее настроеным агентом
