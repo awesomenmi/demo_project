@@ -477,15 +477,250 @@ Successfully installed Flask-2.1.0 Jinja2-3.1.3 MarkupSafe-2.1.5 appdirs-1.4.4 a
 <br>src/app/tests/test_views.py::test_info PASSED                            [100%]
 <br>============================== 4 passed in 3.04s ===============================
 <br>Job succeeded
-
 </details>
 
 
 ### build
-Сборка Docker-образа и его дальнейшая загрузка в Docker-registry
+<details>
+<summary> Сборка Docker-образа и его дальнейшая загрузка в Docker-registry </summary>
+<br>Running with gitlab-runner 16.9.0 (656c1943)
+  <br>on docker ntBZRsda, system ID: r_Tyz9ItF5DV3n
+<br>Preparing the "docker" executor
+<br>00:04
+<br>Using Docker executor with image docker:dind ...
+<br>Pulling docker image docker:dind ...
+Using docker image sha256:e5fbe8997fd9ff8f2894874c12a4fbc5fc1bb42d08a7db8433bbe09066562a2a for docker:dind with digest <br>docker@sha256:0d70c541ee98e66b8f7ece8c0e9f7910732466e337a9087c2ac2868ef0775092 ...
+<br>Preparing environment
+<br>00:01
+<br>Running on runner-ntbzrsda-project-1-concurrent-0 via d7051176ef5d...
+<br>Getting source from Git repository
+<br>00:02
+<br>Fetching changes with git depth set to 20...
+<br>Reinitialized existing Git repository in /builds/root/my_project/.git/
+<br>Checking out bfcbdbaa as detached HEAD (ref is main)...
+<br>Removing .pytest_cache/
+<br>Removing src/.venv/
+<br>Removing src/app/__pycache__/
+<br>Removing src/app/tests/__pycache__/
+<br>Skipping Git submodules setup
+<br>Executing "step_script" stage of the job script
+<br>00:11
+Using docker image sha256:e5fbe8997fd9ff8f2894874c12a4fbc5fc1bb42d08a7db8433bbe09066562a2a for docker:dind with digest <br>docker@sha256:0d70c541ee98e66b8f7ece8c0e9f7910732466e337a9087c2ac2868ef0775092 ...
+<br>$ docker login -u $REGISTRY_USER -p $REGISTRY_PASS
+<br>WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+<br>WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+<br>Configure a credential helper to remove this warning. See
+<br>https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+<br>Login Succeeded
+<br>$ docker build -t $IMAGE_NAME:$IMAGE_TAG .
+<br>#0 building with "default" instance using docker driver
+<br>#1 [internal] load build definition from Dockerfile
+<br>#1 DONE 0.0s
+<br>#1 [internal] load build definition from Dockerfile
+<br>#1 transferring dockerfile:
+<br>#1 transferring dockerfile: 482B done
+<br>#1 DONE 0.8s
+<br>#2 [internal] load metadata for docker.io/library/python:3.9-slim-buster
+<br>#2 DONE 0.0s
+<br>#3 [internal] load .dockerignore
+<br>#3 transferring context:
+<br>#3 transferring context: 123B done
+<br>#3 DONE 0.1s
+<br>#4 [1/6] FROM docker.io/library/python:3.9-slim-buster
+<br>#4 DONE 0.0s
+<br>#5 [internal] load build context
+<br>#5 transferring context: 217.28kB done
+<br>#5 DONE 0.1s
+<br>#6 [2/6] WORKDIR /app
+<br>#6 CACHED
+<br>#7 [3/6] COPY src/requirements.txt .
+<br>#7 CACHED
+<br>#8 [4/6] RUN pip install --no-cache-dir -r requirements.txt
+<br>#8 CACHED
+<br>#9 [5/6] COPY src/run.py .
+<br>#9 CACHED
+<br>#10 [6/6] COPY src/app ./app
+<br>#10 CACHED
+<br>#11 exporting to image
+<br>#11 exporting layers done
+<br>#11 writing image sha256:837aae53468f18cb6fbd05065008b02f1f38344e9b153b448c8e7c4ae13aaca5 done
+<br>#11 naming to docker.io/luminescencia/demo-app:1.0 0.0s done
+<br>#11 DONE 0.0s
+<br>$ docker push $IMAGE_NAME:$IMAGE_TAG
+<br>The push refers to repository [docker.io/luminescencia/demo-app]
+<br>95ba18b4011d: Preparing
+<br>946972809162: Preparing
+<br>bd8ddbc8ff65: Preparing
+<br>e023d039975e: Preparing
+<br>a29091498ccb: Preparing
+<br>067ea27560c1: Preparing
+<br>7fb1037e08b3: Preparing
+<br>14cbeede8d6e: Preparing
+<br>ae2d55769c5e: Preparing
+<br>e2ef8a51359d: Preparing
+<br>067ea27560c1: Waiting
+<br>7fb1037e08b3: Waiting
+<br>14cbeede8d6e: Waiting
+<br>ae2d55769c5e: Waiting
+<br>e2ef8a51359d: Waiting
+<br>946972809162: Layer already exists
+<br>95ba18b4011d: Layer already exists
+<br>a29091498ccb: Layer already exists
+<br>e023d039975e: Layer already exists
+<br>bd8ddbc8ff65: Layer already exists
+<br>067ea27560c1: Layer already exists
+<br>7fb1037e08b3: Layer already exists
+<br>ae2d55769c5e: Layer already exists
+<br>14cbeede8d6e: Layer already exists
+<br>e2ef8a51359d: Layer already exists
+<br>1.0: digest: sha256:606e902b5bd2b346b47529579763e633de4a8628125e5ccf01316c51f3f33415 size: 2411
+</details>
 
 ### deploy
-Подгрузка контекста с ранее настроеным агентом
-Деплой приложения в кластер
+<details>
+</summary> Деплой приложения в minikube </summary>
+<br>Running with gitlab-runner 16.9.0 (656c1943)
+  <br>on docker ntBZRsda, system ID: r_Tyz9ItF5DV3n
+<br>Preparing the "docker" executor
+<br>00:04
+<br>Using Docker executor with image bitnami/kubectl:latest ...
+<br>Pulling docker image bitnami/kubectl:latest ...
+Using docker image sha256:d499a3a1f51df03bbd1f4ac933232c064a5cd8b137094d997f26754c6067bdec for bitnami/kubectl:latest with digest <br>bitnami/kubectl@sha256:fed3fcb0bf89b6c10c273c3f97e0f7e72287890e3ee02d14f66b0b42c0e03ebb ...
+<br>Preparing environment
+<br>00:00
+<br>Running on runner-ntbzrsda-project-1-concurrent-0 via d7051176ef5d...
+<br>Getting source from Git repository
+<br>00:01
+<br>Fetching changes with git depth set to 20...
+<br>Reinitialized existing Git repository in /builds/root/my_project/.git/
+<br>Checking out bfcbdbaa as detached HEAD (ref is main)...
+<br>Skipping Git submodules setup
+<br>Executing "step_script" stage of the job script
+<br>00:05
+Using docker image sha256:d499a3a1f51df03bbd1f4ac933232c064a5cd8b137094d997f26754c6067bdec for bitnami/kubectl:latest with digest <br>bitnami/kubectl@sha256:fed3fcb0bf89b6c10c273c3f97e0f7e72287890e3ee02d14f66b0b42c0e03ebb ...
+<br>$ kubectl config use-context root/k8s-connection:k8s-connection
+<br>Switched to context "root/k8s-connection:k8s-connection".
+<br>$ kubectl apply -f k8s/.
+<br>deployment.apps/demo-app-deployment created
+<br>service/demo-app-service created
+<br>$ kubectl get all
+<br>NAME                                      READY   STATUS    RESTARTS   AGE
+<br>pod/demo-app-deployment-fc4bd7c99-6pxhp   1/1     Running   0          93s
+<br>
+<br>NAME                       TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+<br>service/demo-app-service   NodePort    10.111.143.216   <none>        5000:30100/TCP   95s
+<br>service/kubernetes         ClusterIP   10.96.0.1        <none>        443/TCP          6d10h
+<br>
+<br>NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
+<br>deployment.apps/demo-app-deployment   1/1     1            1           95s
+<br>
+<br>NAME                                            DESIRED   CURRENT   READY   AGE
+<br>replicaset.apps/demo-app-deployment-fc4bd7c99   1         1         1       94s
+</details>
 
+
+[lumi@fhmtps91ba79aa5re88e ~]$ curl 192.168.49.2:30100
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Python DemoApp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/static/css/main.css" rel="stylesheet" />
+    <link href="/static/img/favicon.ico" rel="icon" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/united/bootstrap.min.css"
+      integrity="sha384-JW3PJkbqVWtBhuV/gsuyVVt3m/ecRJjwXC3gCXlTzZZV+zIEEl6AnryAriT7GWYm"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand logotext" href="/">
+        <img src="static/img/python.svg" width="37" height="40" />
+        &nbsp; Python Demo
+      </a>
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="true"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="btn btn-success btn-lg" href="/info">🧾 Info</a>
+          </li>
+          &nbsp;
+          <li class="nav-item active">
+            <a class="btn btn-success btn-lg" href="/monitor">🚦 Monitor</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.min.js"
+      integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+
+    <div class="container body-content">
+<br />
+<div class="jumbotron">
+  <h1><img src="/static/img/flask.png" height="80px" /> Python & Flask Demo App</h1>
+
+  <div class="lead">
+    This is a simple web application written in Python and using Flask. It has been designed with cloud demos &amp;
+    containers in mind. Demonstrating capabilities such as auto scaling, deployment to Azure or Kubernetes, or anytime
+    you want something quick and lightweight to run & deploy.
+  </div>
+  <br />
+
+  <div class="dimmed-box">
+    <p>
+      <img src="static/img/github-2.svg" class="icon" />
+      <a href="https://github.com/benc-uk/python-demoapp" class="btn btn-info btn px-4"> GitHub Project </a>
+
+      &nbsp;&nbsp;&nbsp;
+      <img src="static/img/docker-whale.svg" class="icon" />
+      <a href="https://github.com/users/benc-uk/packages/container/package/python-demoapp" class="btn btn-info btn">
+        Docker Images
+      </a>
+    </p>
+    <hr />
+    <p>
+      <img src="static/img/python.svg" class="icon" />
+      <a class="btn btn-info btn" href="https://azure.microsoft.com/en-gb/develop/python/">
+        Get started with Azure &amp; Python
+      </a>
+    </p>
+
+    <br />
+    <p>Microsoft ❤ Open Source</p>
+  </div>
+</div>
+</div>
+    <span style="float: right">v1.4.2 [Ben Coleman, 2018-2021] &nbsp;&nbsp;&nbsp;</span>
+  </body>
+</html>
  kubectl port-forward svc/demo-app-service --address=0.0.0.0 5000:5000

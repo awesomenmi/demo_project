@@ -31,7 +31,7 @@ deploy:
     name: bitnami/kubectl:latest
     entrypoint: ['']
   script:
-    - kubectl config use-context root/k8s-connection/:k8s-connection
-    - kubectl apply -f k8s/deployment.yaml
-    - kubectl apply -f k8s/service.yaml
-    - kubectl get pods   
+    - kubectl config use-context root/k8s-connection:k8s-connection
+    - kubectl apply -f k8s/.
+    - kubectl get pods
+    - kubectl get svc
