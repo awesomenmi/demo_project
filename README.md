@@ -319,7 +319,70 @@ spec:
 <details>
 
 <summary>Установка утилиты _make_ и запуск тестов</summary>
-Running with gitlab-runner 16.9.0 (656c1943)\  on docker ntBZRsda, system ID: r_Tyz9ItF5DV3n\Preparing the "docker" executor\00:04\Preparing environment\00:00\Running on runner-ntbzrsda-project-1-concurrent-0 via d7051176ef5d...\Getting source from Git repository\00:02\Fetching changes with git depth set to 20...\Reinitialized existing Git repository in /builds/root/my_project/.git/\Checking out bfcbdbaa as detached HEAD (ref is main)...\Skipping Git submodules setup\Executing "step_script" stage of the job script\00:57\Using docker image sha256:c84dbfe3b8deeb39e17d121220107f8354a9083b468a320a77708cd128f11c87 for python:3.9-slim-buster with digest python@sha256:320a7a4250aba4249f458872adecf92eea88dc6abd2d76dc5c0f01cac9b53990 ...\$ apt-get update && apt-get install make\Get:1 http://deb.debian.org/debian buster InRelease [122 kB]\Get:2 http://deb.debian.org/debian-security buster/updates InRelease [34.8 kB]\Get:3 http://deb.debian.org/debian buster-updates InRelease [56.6 kB]\Get:4 http://deb.debian.org/debian buster/main amd64 Packages [7909 kB]\Get:5 http://deb.debian.org/debian-security buster/updates/main amd64 Packages [587 kB]\Get:6 http://deb.debian.org/debian buster-updates/main amd64 Packages [8788 B]\Fetched 8718 kB in 3s (3356 kB/s)\Reading package lists...\Reading package lists...\Building dependency tree...\Reading state information...\Suggested packages:\  make-doc\The following NEW packages will be installed:\  make\0 upgraded, 1 newly installed, 0 to remove and 11 not upgraded.\Need to get 341 kB of archives.\After this operation, 1327 kB of additional disk space will be used.\Get:1 http://deb.debian.org/debian buster/main amd64 make amd64 4.2.1-1.2 [341 kB]\debconf: delaying package configuration, since apt-utils is not installed\Fetched 341 kB in 0s (2609 kB/s)\Selecting previously unselected package make.\(Reading database ... 6843 files and directories currently installed.)\Preparing to unpack .../make_4.2.1-1.2_amd64.deb ...\Unpacking make (4.2.1-1.2) ...\Setting up make (4.2.1-1.2) ...\$ make test\python3 -m venv src/.venv\make: git: Command not found\. src/.venv/bin/activate; pip install -Ur src/requirements.txt\Collecting Flask==2.1.0\  Downloading Flask-2.1.0-py3-none-any.whl (95 kB)\     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 95.2/95.2 kB 346.6 kB/s eta 0:00:00\Collecting py-cpuinfo==7.0.0\  Downloading py-cpuinfo-7.0.0.tar.gz (95 kB)\     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 95.9/95.9 kB 937.3 kB/s eta 0:00:00\  Preparing metadata (setup.py): started\  Preparing metadata (setup.py): finished with status 'done'\Collecting psutil==5.8.0\  Downloading psutil-5.8.0-cp39-cp39-manylinux2010_x86_64.whl (293 kB)\     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 293.5/293.5 kB 3.0 MB/s eta 0:00:00\Collecting gunicorn==20.1.0\  Downloading gunicorn-20.1.0-py3-none-any.whl (79 kB)\     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 79.5/79.5 kB 318.8 kB/s eta 0:00:00\Collecting black==20.8b1\  Downloading black-20.8b1.tar.gz (1.1 MB)\     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 24.4 MB/s eta 0:00:00
+Running with gitlab-runner 16.9.0 (656c1943)
+  on docker ntBZRsda, system ID: r_Tyz9ItF5DV3n
+Preparing the "docker" executor
+00:04
+Preparing environment
+00:00
+Running on runner-ntbzrsda-project-1-concurrent-0 via d7051176ef5d...
+Getting source from Git repository
+00:02
+Fetching changes with git depth set to 20...
+Reinitialized existing Git repository in /builds/root/my_project/.git/
+Checking out bfcbdbaa as detached HEAD (ref is main)...
+Skipping Git submodules setup
+Executing "step_script" stage of the job script
+00:57
+Using docker image sha256:c84dbfe3b8deeb39e17d121220107f8354a9083b468a320a77708cd128f11c87 for python:3.9-slim-buster with digest python@sha256:320a7a4250aba4249f458872adecf92eea88dc6abd2d76dc5c0f01cac9b53990 ...
+$ apt-get update && apt-get install make
+Get:1 http://deb.debian.org/debian buster InRelease [122 kB]
+Get:2 http://deb.debian.org/debian-security buster/updates InRelease [34.8 kB]
+Get:3 http://deb.debian.org/debian buster-updates InRelease [56.6 kB]
+Get:4 http://deb.debian.org/debian buster/main amd64 Packages [7909 kB]
+Get:5 http://deb.debian.org/debian-security buster/updates/main amd64 Packages [587 kB]
+Get:6 http://deb.debian.org/debian buster-updates/main amd64 Packages [8788 B]
+Fetched 8718 kB in 3s (3356 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+Suggested packages:
+  make-doc
+The following NEW packages will be installed:
+  make
+0 upgraded, 1 newly installed, 0 to remove and 11 not upgraded.
+Need to get 341 kB of archives.
+After this operation, 1327 kB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian buster/main amd64 make amd64 4.2.1-1.2 [341 kB]
+debconf: delaying package configuration, since apt-utils is not installed
+Fetched 341 kB in 0s (2609 kB/s)
+Selecting previously unselected package make.
+(Reading database ... 6843 files and directories currently installed.)
+Preparing to unpack .../make_4.2.1-1.2_amd64.deb ...
+Unpacking make (4.2.1-1.2) ...
+Setting up make (4.2.1-1.2) ...
+$ make test
+python3 -m venv src/.venv
+make: git: Command not found
+. src/.venv/bin/activate; pip install -Ur src/requirements.txt
+Collecting Flask==2.1.0
+  Downloading Flask-2.1.0-py3-none-any.whl (95 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 95.2/95.2 kB 346.6 kB/s eta 0:00:00
+Collecting py-cpuinfo==7.0.0
+  Downloading py-cpuinfo-7.0.0.tar.gz (95 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 95.9/95.9 kB 937.3 kB/s eta 0:00:00
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting psutil==5.8.0
+  Downloading psutil-5.8.0-cp39-cp39-manylinux2010_x86_64.whl (293 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 293.5/293.5 kB 3.0 MB/s eta 0:00:00
+Collecting gunicorn==20.1.0
+  Downloading gunicorn-20.1.0-py3-none-any.whl (79 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 79.5/79.5 kB 318.8 kB/s eta 0:00:00
+Collecting black==20.8b1
+  Downloading black-20.8b1.tar.gz (1.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 24.4 MB/s eta 0:00:00
   Installing build dependencies: started
   Installing build dependencies: finished with status 'done'
   Getting requirements to build wheel: started
@@ -420,17 +483,17 @@ Job succeeded
 ### build
 Сборка Docker-образа и его дальнейшая загрузка в Docker-registry
 <details>
-Running with gitlab-runner 16.9.0 (656c1943)
-  on docker ntBZRsda, system ID: r_Tyz9ItF5DV3n
-Preparing the "docker" executor
-00:04
-Using Docker executor with image docker:dind ...
-Pulling docker image docker:dind ...
-Using docker image sha256:e5fbe8997fd9ff8f2894874c12a4fbc5fc1bb42d08a7db8433bbe09066562a2a for docker:dind with digest docker@sha256:0d70c541ee98e66b8f7ece8c0e9f7910732466e337a9087c2ac2868ef0775092 ...
-Preparing environment
-00:01
-Running on runner-ntbzrsda-project-1-concurrent-0 via d7051176ef5d...
-Getting source from Git repository
+Running with gitlab-runner 16.9.0 (656c1943) <br>
+  on docker ntBZRsda, system ID: r_Tyz9ItF5DV3n <br>
+Preparing the "docker" executor <br>
+00:04 <br>
+Using Docker executor with image docker:dind ... <br>
+Pulling docker image docker:dind ... <br>
+Using docker image sha256:e5fbe8997fd9ff8f2894874c12a4fbc5fc1bb42d08a7db8433bbe09066562a2a for docker:dind with digest docker@sha256:0d70c541ee98e66b8f7ece8c0e9f7910732466e337a9087c2ac2868ef0775092 ... <br>
+Preparing environment <br>
+00:01 <br>
+Running on runner-ntbzrsda-project-1-concurrent-0 via d7051176ef5d... <br>
+Getting source from Git repository <br>
 00:02
 Fetching changes with git depth set to 20...
 Reinitialized existing Git repository in /builds/root/my_project/.git/
