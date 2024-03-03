@@ -483,17 +483,17 @@ Job succeeded
 ### build
 Сборка Docker-образа и его дальнейшая загрузка в Docker-registry
 <details>
-Running with gitlab-runner 16.9.0 (656c1943) <br>
-  on docker ntBZRsda, system ID: r_Tyz9ItF5DV3n <br>
-Preparing the "docker" executor <br>
-00:04 <br>
-Using Docker executor with image docker:dind ... <br>
-Pulling docker image docker:dind ... <br>
-Using docker image sha256:e5fbe8997fd9ff8f2894874c12a4fbc5fc1bb42d08a7db8433bbe09066562a2a for docker:dind with digest docker@sha256:0d70c541ee98e66b8f7ece8c0e9f7910732466e337a9087c2ac2868ef0775092 ... <br>
-Preparing environment <br>
-00:01 <br>
-Running on runner-ntbzrsda-project-1-concurrent-0 via d7051176ef5d... <br>
-Getting source from Git repository <br>
+<br>Running with gitlab-runner 16.9.0 (656c1943)
+<br>  on docker ntBZRsda, system ID: r_Tyz9ItF5DV3n
+<br>Preparing the "docker" executor
+<br>00:04
+Using Docker executor with image docker:dind ...
+Pulling docker image docker:dind ...
+Using docker image sha256:e5fbe8997fd9ff8f2894874c12a4fbc5fc1bb42d08a7db8433bbe09066562a2a for docker:dind with digest docker@sha256:0d70c541ee98e66b8f7ece8c0e9f7910732466e337a9087c2ac2868ef0775092 ...
+Preparing environment
+00:01
+Running on runner-ntbzrsda-project-1-concurrent-0 via d7051176ef5d...
+Getting source from Git repository
 00:02
 Fetching changes with git depth set to 20...
 Reinitialized existing Git repository in /builds/root/my_project/.git/
